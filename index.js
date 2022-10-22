@@ -32,6 +32,21 @@ const addTask = (body) => {
      saveTasks(tasks)
 }
 
+
+const updateTask = (task) => {
+     const tasks = loadTasks()
+     console.log(tasks)
+     const updatedTasks = []
+     for(const each of tasks) {
+          if (each.id === task.id) {
+               each.body =task.body
+          }
+          updatedTasks.push(each)
+     }
+     saveTasks(updatedTasks)
+}
+
+
 app.listen(3000)
 
 app.get('/', (req, res)=> {
@@ -45,15 +60,17 @@ app.post('/tasks/new', (req, res) => {
      res.status(200).send({ status: 'OK'});
 })
 
-app.delete('/:id', (req, res)=> {
+app.delete('/update/:id', (req, res)=> {
      const { id } = req.params
      removeTask(id)
 })
 
-app.put('/:id', (req, res)=> {
+app.put('/update/:id', (req, res)=> {
      const { id } = req.params
-     removeTask(id)
+     task = req.body 
+     updateTask(task)
 })
+
 
 
 

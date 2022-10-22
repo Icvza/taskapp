@@ -21,7 +21,7 @@ function diaplayTasks(tasks) {
 
 function generateHTML(task) {
      return ` 
-          <div class=" ">
+          <div class="id:${task.id}">
                <p> ${task.id} </p>
                <h1> ${task.body} </h2>
                <button onClick=(editTask()) class="edit"> Edit </button>
@@ -78,22 +78,51 @@ const deleteTask = () => {
 
 const editTask = () =>{
      let id = parseInt(event.target.parentElement.firstElementChild.innerHTML)
-     let word = event.target.parentElement.children[1]
-     let conatiner = document.querySelector("body > div > div")
+     const currentTaskBody = document.getElementsByClassName(`id:${id}`)[0].children[1].innerHTML
+
+     //Creating the form to diaplay 
      let form = document.createElement('form')
-     form.classList = "addTaskForm"
+     form.classList = "addTaskForm edit"
      let inputText = document.createElement('input')
-     inputText.type = type="text"
-     inputText.classList = "formInput"
+     inputText.type ="text"
+     inputText.classList = "formInput edit"
+     inputText.placeholder = `${currentTaskBody}`
      let inputSubmit = document.createElement('input')
      inputSubmit.type = "submit"
 
      form.append(inputText)
      form.append(inputSubmit)
 
-     conatiner.append(form)
+     const x = document.getElementsByClassName(`id:${id}`)[0]
+     const y = document.getElementsByClassName(`id:${id}`)[0].children[1]
 
+     y.remove()
+     x.insertBefore(form, document.getElementsByClassName(`id:${id}`)[0].children[1])
+     
+     
+     const i = document.getElementsByClassName('addTaskForm edit')[0]
+     i.addEventListener('submit', (event) => {
+          event.preventDefault()
+
+          const editedInput= document.getElementsByClassName("formInput edit")[0]
+
+          const taskBody = editedInput.value
+     
+          const task = { id: id, body: taskBody }
+     
+          const configObj = {
+               method: 'PUT',
+               headers: {
+                    'Content-Type': 'application/json'
+               },
+               body: JSON.stringify(task)
+          }
+     
+          fetch('http://localhost:3000/update/' + id, configObj)
+               .then(resp => resp.json())
+               .then(task => {
+                    console.log(task)
+               })
+     })
 
 }
-
-
