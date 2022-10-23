@@ -35,7 +35,6 @@ const addTask = (body) => {
 
 const updateTask = (task) => {
      const tasks = loadTasks()
-     console.log(tasks)
      const updatedTasks = []
      for(const each of tasks) {
           if (each.id === task.id) {
@@ -60,7 +59,7 @@ app.post('/tasks/new', (req, res) => {
      res.status(200).send({ status: 'OK'});
 })
 
-app.delete('/update/:id', (req, res)=> {
+app.delete('/:id', (req, res)=> {
      const { id } = req.params
      removeTask(id)
 })
