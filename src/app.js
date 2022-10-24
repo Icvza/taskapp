@@ -2,7 +2,7 @@ const taskContainer = document.getElementsByClassName('feed')[0]
 const addTaskForm = document.getElementsByClassName("addTaskForm")[0]
 const taskInput = document.getElementsByClassName("formInput")[0]
 
-const corsUrl = "https://cors-everywhere.herokuapp.com/http://54.158.71.240"
+const corsUrl = "https://cors-everywhere.herokuapp.com/http://3.95.199.36"
 
 document.addEventListener('DOMContentLoaded', fetchTasks)
 //debugger
