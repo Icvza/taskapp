@@ -122,14 +122,6 @@ const editSubmit = (event) => {
 
      const task = { id: id, body: taskBody }
 
-     function nonDataTask (task){
-          let html = generateHTML(task)
-          let element = elementFromHtml(html)
-          taskContainer.append(element)
-     }
-
-     nonDataTask(task)
-
      const configObj = {
           method: 'PUT',
           headers: {
