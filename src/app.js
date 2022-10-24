@@ -4,7 +4,7 @@ const taskInput = document.getElementsByClassName("formInput")[0]
 document.addEventListener('DOMContentLoaded', fetchTasks)
 //debugger
 function fetchTasks() {
-     fetch('http://localhost:3000')
+     fetch('http://54.158.71.240/')
           .then(resp => resp.json())
           .then(tasks => {
                diaplayTasks(tasks)
@@ -70,7 +70,7 @@ addTaskForm.addEventListener('submit', (event) => {
           body: JSON.stringify(task)
      }
 
-     fetch("http://localhost:3000/tasks/new", configObj)
+     fetch("http://54.158.71.240/tasks/new", configObj)
           .then(resp => resp.json())
           .then(task => {
                console.log(task)
@@ -84,7 +84,7 @@ const deleteTask = (event) => {
      event.preventDefault()
      console.log(id)
 
-     fetch('http://localhost:3000/' + id, {
+     fetch('http://54.158.71.240/' + id, {
           method: 'DELETE',
           headers: {
                'Content-Type': 'application/json'
@@ -112,7 +112,7 @@ const editSubmit = (event) => {
           body: JSON.stringify(task)
      }
 
-     fetch('http://localhost:3000/update/' + id, configObj)
+     fetch('http://54.158.71.240/update/' + id, configObj)
           .then(resp => resp.json())
           .then(task => {
                console.log(task)
