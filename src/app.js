@@ -1,10 +1,13 @@
 const taskContainer = document.getElementsByClassName('feed')[0]
 const addTaskForm = document.getElementsByClassName("addTaskForm")[0]
 const taskInput = document.getElementsByClassName("formInput")[0]
+
+const corsUrl = "https://cors-everywhere.herokuapp.com/http://54.158.71.240"
+
 document.addEventListener('DOMContentLoaded', fetchTasks)
 //debugger
 function fetchTasks() {
-     fetch('http://54.158.71.240/')
+     fetch(`${corsUrl}`)
           .then(resp => resp.json())
           .then(tasks => {
                diaplayTasks(tasks)
@@ -70,7 +73,18 @@ addTaskForm.addEventListener('submit', (event) => {
           body: JSON.stringify(task)
      }
 
-     fetch("http://54.158.71.240/tasks/new", configObj)
+     const idreplacement = document.getElementsByClassName('feed')[0].childElementCount
+     const fakeTask = {id: idreplacement, ...task}
+
+     function nonDataTask (task){
+          let html = generateHTML(task)
+          let element = elementFromHtml(html)
+          taskContainer.append(element)
+     }
+
+     nonDataTask(fakeTask)
+
+     fetch(`${corsUrl}/tasks/new`, configObj)
           .then(resp => resp.json())
           .then(task => {
                console.log(task)
@@ -82,17 +96,21 @@ const deleteTask = (event) => {
      
      let id = parseInt(event.target.parentElement.parentElement.parentElement.children[0].innerHTML)
      event.preventDefault()
-     console.log(id)
-
-     fetch('http://54.158.71.240/' + id, {
+     const taskHtml = document.getElementsByClassName(`id:${id}`)[0]
+     taskHtml.remove()
+     fetch(`${corsUrl}/` + id, {
           method: 'DELETE',
           headers: {
                'Content-Type': 'application/json'
           }
      })
           .then(resp => resp)
-          .then(json => console.log('something'))
+          .then(json => {
+               console.log('Deleted')
+          })
 }
+
+
 
 //===============EDIT============================
 
@@ -112,7 +130,7 @@ const editSubmit = (event) => {
           body: JSON.stringify(task)
      }
 
-     fetch('http://54.158.71.240/update/' + id, configObj)
+     fetch(`${corsUrl}/update/` + id, configObj)
           .then(resp => resp.json())
           .then(task => {
                console.log(task)
