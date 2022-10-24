@@ -73,9 +73,9 @@ addTaskForm.addEventListener('submit', (event) => {
           body: JSON.stringify(task)
      }
 
-     const idreplacement = document.getElementsByClassName('feed')[0].childElementCount
+     const idrep = parseInt(document.getElementsByClassName('feed')[0].childElementCount)
+     const idreplacement = idrep + 1
      const fakeTask = {id: idreplacement, ...task}
-
      function nonDataTask (task){
           let html = generateHTML(task)
           let element = elementFromHtml(html)
