@@ -122,6 +122,17 @@ const editSubmit = (event) => {
 
      const task = { id: id, body: taskBody }
 
+     function createNode(passedfunction) {
+          const html = passedfunction 
+          debugger
+          const element = elementFromHtml(html)
+          return element
+     }
+
+     const sectionTodel = event.target.parentElement.parentElement.parentElement.parentElement.parentElement.parentElement
+     const secionParent = sectionTodel.parentNode
+     secionParent.replaceChild(createNode(generateHTML(task)), sectionTodel)
+
      const configObj = {
           method: 'PUT',
           headers: {
